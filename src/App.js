@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { itemsFetchData } from './actions/items';
 
 class App extends Component {
     constructor() {
@@ -32,27 +34,29 @@ class App extends Component {
   componentDidMount() {
       this.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
   }
+
     
 
-    render() {
-        if (this.state.hasErrored) {
-            return <p>Sorry! There was an error loading the items</p>;
-        }
-
-        if (this.state.isLoading) {
-            return <p>Loading…</p>;
-        }
-
-        return (
-            <ul>
-                {this.state.items.map((item) => (
-                    <li key={item.id}>
-                        {item.label}
-                    </li>
-                ))}
-            </ul>
-        );
+  render() {
+    if (this.props.hasErrored) {
+        return <p>Sorry! There was an error loading the items</p>;
     }
+
+    if (this.props.isLoading) {
+        return <p>Loading…</p>;
+    }
+
+    return (
+        <ul>
+            {this.props.items.map((item) => (
+                <li key={item.id}>
+                    {item.label}
+                </li>
+            ))}
+        </ul>
+      );
+  }
 }
+
 
 export default App;
